@@ -1,0 +1,9 @@
+{
+  "name": "Canvas Agent",
+  "short_name": "Canvas",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": []
+}
