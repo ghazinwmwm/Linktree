@@ -1,0 +1,317 @@
+{
+  "passed": 62,
+  "total": 62,
+  "failed": [],
+  "results": [
+    {
+      "feature": "blank_start",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "no_load_errors",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "feature": "rich_elements",
+      "pass": true,
+      "detail": "['card', 'checklist', 'progress', 'table']"
+    },
+    {
+      "feature": "dynamic_card_height",
+      "pass": true,
+      "detail": "overflow=False"
+    },
+    {
+      "feature": "layout_grid",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "feature": "layout_radial",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "feature": "layout_linear",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "feature": "layout_tree",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "feature": "layout_hierarchy",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "feature": "layout_timeline",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "feature": "layout_flow",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "feature": "layout_org",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "feature": "layout_auto",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "feature": "focus_mode",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "smart_duplicate",
+      "pass": true,
+      "detail": "4->6"
+    },
+    {
+      "feature": "voice_navigation_context",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "semantic_relations",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "dependency_view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "collapse_branch",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "expand_branch",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "smart_grouping",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "map_to_table",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "versions_snapshots",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "presentation_mode",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "canvas_search",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "search_filters",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "timeline_template",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "closed_sheet_not_visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "web_search_visual_map",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "sources_confidence",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "deep_research_multi_pass",
+      "pass": true,
+      "detail": "1->4"
+    },
+    {
+      "feature": "full_project_planning",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "mobile_plan_readable_scale",
+      "pass": true,
+      "detail": "0.6518218623481782"
+    },
+    {
+      "feature": "tool_reason_alternatives_cost",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "tool_finder",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "documentation_reader",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "tool_comparison",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "github_search",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "image_reference_search",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "url_context",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "code_runner",
+      "pass": true,
+      "detail": "{'text': '400\\n\\nالمجموع 400 دولار حسب الافتراضات.', 'code': 'print(100+250+50)', 'output': '400\\n'}"
+    },
+    {
+      "feature": "cost_calculator",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "api_tester",
+      "pass": true,
+      "detail": "{'status': 200, 'ms': 0, 'body': '{\"ok\":true,\"value\":42}'}"
+    },
+    {
+      "feature": "news_and_competitors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "update_plan",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "ai_critic",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "ai_summarize",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "ai_expand",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "ai_compare",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "text_file_to_map",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "pdf_multimodal_to_map",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "voice_live_preview",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "voice_commit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "cloud_collaboration_transport",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "export_json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "export_png",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "export_pdf",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "tool_router",
+      "pass": true,
+      "detail": "['web', 'plan', 'github', 'compare-tools', 'cost', 'docs', 'toolfinder', 'images']"
+    },
+    {
+      "feature": "external_tool_menu_complete",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "offline_assets",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "netlify_collab_function",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "feature": "no_runtime_errors",
+      "pass": true,
+      "detail": "[]"
+    }
+  ]
+}
