@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>Canvas — Gemini</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<main id="app">
+<section id="canvas" class="preset-pastel" aria-label="Canvas">
+  <div id="world">
+    <svg id="edges" aria-hidden="true">
+      <defs>
+        <marker id="arrowHead" markerWidth="9" markerHeight="9" refX="7.2" refY="4.5" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L9,4.5 L0,9 z"></path>
+        </marker>
+      </defs>
+      <g id="edgeLayer"></g>
+    </svg>
+    <div id="groupLayer"></div>
+    <div id="nodeLayer"></div>
+  </div>
+
+  <header class="app-header" aria-label="App header">
+    <div class="brand" dir="ltr">
+      <div class="brand-title" id="projectTitle">Canvas</div>
+      <div class="brand-subtitle">Ideas, visually.</div>
+      <div id="statusPill" class="status-pill" aria-live="polite"><span class="dot"></span><span id="statusText">جاهز</span></div>
+    </div>
+    <div class="header-actions" dir="ltr">
+      <button id="settingsBtn" class="model-pill" aria-label="إعدادات Gemini" title="إعدادات Gemini">
+        <span class="sparkle">✦</span><span id="modelPillText">Gemini Flash</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5"/></svg>
+      </button>
+      <button id="moreBtn" class="more-btn" aria-label="المزيد" title="المزيد"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div id="emptyHint" class="empty-hint hidden" aria-hidden="true"></div>
+
+  <div id="selectionBar" class="selection-bar" aria-hidden="true" dir="ltr">
+    <span id="selectionCount">1 selected</span>
+    <button id="editSelectedBtn">Edit</button><button id="groupSelectedBtn">Group</button><button id="deleteSelectedBtn">Delete</button>
+  </div>
+
+  <div class="canvas-tools" dir="ltr" aria-label="Canvas tools">
+    <button id="selectTool" class="tool-btn active" aria-label="Select" title="Select"><svg viewBox="0 0 24 24"><path d="M5 3.5 18.8 12l-6.2 1.4 3.2 5.4-2.2 1.3-3.2-5.5L6 19.2 5 3.5Z"/></svg></button>
+    <button id="connectTool" class="tool-btn" aria-label="Connect" title="Connect"><svg viewBox="0 0 24 24"><circle cx="6" cy="17" r="2.2"/><circle cx="18" cy="7" r="2.2"/><path d="M7.8 15.5 16.2 8.5"/></svg></button>
+    <button id="addTool" class="tool-btn" aria-label="Add" title="Add"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><path d="M12 8v8M8 12h8"/></svg></button>
+  </div>
+
+  <canvas id="minimap" class="minimap" width="140" height="96" aria-label="Mini map"></canvas>
+
+  <div class="zoom-pill" dir="ltr" aria-label="Zoom">
+    <button id="zoomOutBtn" aria-label="Zoom out">−</button><span id="zoomValue">100%</span><button id="zoomInBtn" aria-label="Zoom in">+</button>
+  </div>
+
+  <div id="suggestions" class="suggestions" dir="rtl"></div>
+
+  <div class="composer-wrap">
+    <div class="composer">
+      <div class="input-shell">
+        <textarea id="commandInput" rows="1" placeholder="Ask or say something..." autocomplete="off" dir="auto"></textarea>
+        <div id="interimText" class="interim-text" aria-live="polite"></div>
+      </div>
+      <button id="sendBtn" class="send-btn" aria-label="تنفيذ" title="تنفيذ"><svg viewBox="0 0 24 24"><path d="M3.4 20.4 21 12 3.4 3.6 3 10l12 2-12 2 .4 6.4Z"/></svg></button>
+      <button id="micBtn" class="mic-btn" aria-label="تشغيل المايك" title="تشغيل المايك"><span class="pulse-ring"></span><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg></button>
+    </div>
+  </div>
+
+  <div id="searchBar" class="search-bar" aria-hidden="true">
+    <input id="searchInput" type="search" placeholder="ابحث داخل اللوحة…" autocomplete="off" />
+    <span id="searchMeta"></span><button id="openFilters" aria-label="فلاتر">≡</button><button id="closeSearch" aria-label="إغلاق">×</button>
+  </div>
+
+  <aside id="settingsPanel" class="settings-panel sheet" aria-hidden="true">
+    <div class="sheet-handle"></div>
+    <div class="settings-head"><div><strong>Model &amp; API Settings</strong><small>Configure how Canvas works with Gemini.</small></div><button id="closeSettings" class="close-sheet" aria-label="إغلاق">×</button></div>
+    <label class="setting-card"><div class="setting-copy"><span>API Key</span><small>يبقى داخل جهازك فقط</small></div><div class="secret-row"><input id="apiKeyInput" type="password" placeholder="AIza…" spellcheck="false" autocomplete="off"/><button id="toggleKey" type="button" class="mini-btn">إظهار</button></div></label>
+    <label class="setting-card"><div class="setting-copy"><span>Model</span><small id="modelHint">Auto selects an available Gemini model</small></div><input id="modelInput" type="text" value="auto" placeholder="auto" spellcheck="false"/></label>
+    <label class="setting-card inline-setting"><div class="setting-copy"><span>Speech Language</span><small>لغة تحويل الصوت</small></div><select id="speechLanguage"><option value="ar-IQ">العربية — العراق</option><option value="ar-SA">العربية — السعودية</option><option value="en-US">English (US)</option></select></label>
+    <label class="setting-card inline-setting"><div class="setting-copy"><span>Auto Send Voice</span><small>ينفذ بعد السكوت</small></div><input id="autoSendVoice" type="checkbox" checked/></label>
+    <div class="settings-actions"><button id="testApiBtn" class="secondary-btn">اختبار الاتصال</button><button id="saveSettingsBtn" class="primary-btn">حفظ</button></div>
+    <p class="settings-note">المفتاح يُحفظ محلياً على هذا الجهاز حتى بعد إغلاق الصفحة. لا يوجد خادم وسيط.</p>
+  </aside>
+
+  <aside id="utilitySheet" class="utility-sheet sheet" aria-hidden="true"><div class="sheet-handle"></div><div id="utilityContent"></div></aside>
+  <div id="backdrop" class="settings-backdrop" aria-hidden="true"></div>
+
+  <input id="imageInput" type="file" accept="image/*" hidden />
+  <input id="fileInput" type="file" accept=".pdf,.txt,.md,.csv,.json,image/*,application/pdf,text/plain,text/markdown,text/csv,application/json" hidden />
+  <input id="importInput" type="file" accept="application/json,.json" hidden />
+
+  <section id="presentationOverlay" class="presentation-overlay" aria-hidden="true">
+    <div class="presentation-top"><span id="presentationCounter"></span><button id="closePresentation" aria-label="إغلاق">×</button></div>
+    <div id="presentationCard" class="presentation-card"></div>
+    <div class="presentation-controls"><button id="presentationPrev">‹</button><button id="presentationNext">›</button></div>
+  </section>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</section>
+</main>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
