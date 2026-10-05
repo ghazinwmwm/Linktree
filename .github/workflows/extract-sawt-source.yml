@@ -1,4 +1,4 @@
-name: Restore and Deploy Sawt
+name: Validate Sawt
 
 on:
   push:
@@ -6,38 +6,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: sawt-pages
-  cancel-in-progress: true
+  contents: read
 
 jobs:
-  restore-deploy:
-    if: github.actor != 'github-actions[bot]'
+  validate:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Rebuild recovered source
-        shell: bash
-        run: |
-          set -euo pipefail
-          test -d .source_parts
-          cat .source_parts/part*.txt > sawt.b64
-          base64 --decode sawt.b64 > sawt-source.tar.gz
-          mkdir -p restored
-          tar -xzf sawt-source.tar.gz -C restored
-          cp -a restored/. .
-          rm -rf restored sawt.b64 sawt-source.tar.gz .source_parts sawt-workspace-fixed-source.zip
 
       - name: Validate source
         shell: bash
@@ -52,31 +28,3 @@ jobs:
             echo "Unexpected login gate found"
             exit 1
           fi
-
-      - name: Commit restored source
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "No source changes to commit"
-          else
-            git commit -m "Restore verified Sawt workspace source"
-            git push origin HEAD:main
-          fi
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Deploy Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
