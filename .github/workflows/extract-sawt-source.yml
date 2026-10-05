@@ -1,4 +1,4 @@
-name: Extract Sawt source
+name: Restore and Deploy Sawt
 
 on:
   push:
@@ -7,30 +7,39 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: sawt-pages
+  cancel-in-progress: true
 
 jobs:
-  extract:
+  restore-deploy:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Rebuild and verify recovered source
+      - name: Rebuild recovered source
         shell: bash
         run: |
           set -euo pipefail
-          test -d parts
-          cat parts/part-* > sawt.b64
-          base64 --decode sawt.b64 > sawt-workspace-fixed-source.zip
-          echo "cc07f9a1c57d7b90b564db715d4e7186c3a35357970fc638edcdca982fd6d574  sawt-workspace-fixed-source.zip" | sha256sum -c -
-          unzip -t sawt-workspace-fixed-source.zip
-          unzip -o sawt-workspace-fixed-source.zip -d .
-          rm -rf parts sawt.b64 sawt-workspace-fixed-source.zip
+          test -d .source_parts
+          cat .source_parts/part*.txt > sawt.b64
+          base64 --decode sawt.b64 > sawt-source.tar.gz
+          mkdir -p restored
+          tar -xzf sawt-source.tar.gz -C restored
+          cp -a restored/. .
+          rm -rf restored sawt.b64 sawt-source.tar.gz .source_parts sawt-workspace-fixed-source.zip
 
-      - name: Validate JavaScript and JSON
+      - name: Validate source
         shell: bash
         run: |
           set -euo pipefail
@@ -38,8 +47,13 @@ jobs:
           node --check service-worker.js
           node --check netlify/functions/collab.mjs
           node -e "JSON.parse(require('fs').readFileSync('package.json','utf8')); JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8'));"
+          grep -q "LS.getItem('gemini_api_key')" app.js
+          if grep -R -n "سجل الدخول إلى المنصة" index.html app.js styles.css; then
+            echo "Unexpected login gate found"
+            exit 1
+          fi
 
-      - name: Commit extracted source
+      - name: Commit restored source
         shell: bash
         run: |
           set -euo pipefail
@@ -47,8 +61,22 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           if git diff --cached --quiet; then
-            echo "No changes"
+            echo "No source changes to commit"
           else
-            git commit -m "Extract verified Sawt workspace source"
+            git commit -m "Restore verified Sawt workspace source"
             git push origin HEAD:main
           fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
